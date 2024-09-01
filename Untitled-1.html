@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>loe bossing</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        canvas {
+            border: 2px solid #000;
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="heartCanvas" width="500" height="500"></canvas>
+    <script>
+        const canvas = document.getElementById('heartCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function drawHeart(t) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.beginPath();
+            ctx.moveTo(250, 250);
+
+            for (let i = 0; i < t; i += 0.1) {
+                const x = 16 * Math.sin(i) ** 3;
+                const y = 13 * Math.cos(i) - 5 * Math.cos(2 * i) - 2 * Math.cos(3 * i) - Math.cos(4 * i);
+                ctx.lineTo(250 + x * 10, 250 - y * 10);
+            }
+
+            ctx.closePath();
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = 'red';
+            ctx.stroke();
+            ctx.fillStyle = 'red';
+            ctx.fill();
+
+            if (t >= 6.28) {  // 2 * Math.PI
+                ctx.font = '24px Arial';
+                ctx.fillStyle = 'black';
+                ctx.textAlign = 'center';
+                ctx.fillText('miss u boss HAHA', 250, 250);
+            }
+        }
+
+        let t = 0;
+        function animate() {
+            t += 0.05;
+            drawHeart(t);
+            if (t < 6.28) {  // 2 * Math.PI
+                requestAnimationFrame(animate);
+            }
+        }
+
+        animate();
+    </script>
+</body>
+</html>
